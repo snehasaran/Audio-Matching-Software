@@ -1,0 +1,6 @@
+if [ $# -eq 4 -a "$1"=="-f" -a "$3"=="-f" ]; then
+   java AudioProcessing "$@"
+else
+  echo "ERROR: incorrect command line"
+  exit 1
+fi

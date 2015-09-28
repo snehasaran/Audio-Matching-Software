@@ -1,0 +1,134 @@
+1. Members of team -
+Brinal Pereira (Email: brinalp@ccs.neu.edu)
+Sneha Saran (Email: snehasar@ccs.neu.edu)
+Swara Saxena (Email: saxena.s@husky.neu.edu)
+Tanvi Korday (Email: korday.t@husky.neu.edu)
+
+Extract folder from the tar.gz folder and copy it in
+ your current working directory. 
+From the command prompt, navigate to the directory containing 
+this folder, say /home/USER/Desktop/Folder , by typing the 
+following command ::
+cd /home/USER/Desktop/Folder
+
+Run the Makefile by typing the following command:
+make -f Makefile
+
+This step would compile the program.
+
+This would result in creation of .class files in this folder.
+If everything went well, there should not be any error messages.
+
+If you are getting an error saying "PERMISSION DENIED", that means
+you need to give privileges to your current working directory.
+In order to do so, type the following command:
+chmod -R 777 <absolutepathname>
+
+where,
+absolutepathname is the full pathname of the directory in which
+you have copied the folder.
+
+EXAMPLE:
+chmod -R 777 /home/USER/Desktop/Folder
+
+
+3. HOW TO EXECUTE : 
+To run the Audio Matching program, execute a command of any of the 
+following forms on CCIS Linux machine:
+
+./dam -f <pathname> -f <pathname>
+./dam -d <pathname> -d <pathname>
+./dam -f <pathname> -d <pathname>
+./dam -d <pathname> -f <pathname>
+
+where <pathname> is a Linux path name. If <pathname> is preceded by -f, 
+then the <pathname> should be of a file. If it is preceded by -d , 
+it should be of a directory.
+
+If the file is a wav file, file must be in little-endian (RIFF) WAVE
+format with PCM encoding (AudioFormat 1), stereo or mono,
+8- or 16-bit samples, with a sampling rate of 11.025, 22.05,
+44.1, or 48 kHz. 
+
+If the <pathname> ends in ".mp3", that file must be in the
+MPEG-1 Audio Layer III format (MP3).
+
+If the <pathname> ends in ".ogg", that file must be in a
+format that version 1.4.0 of the oggdec program.
+
+Acceptable file formats are .mp3,.wav and .ogg. Any other file given 
+as input will result in an error with the following statement displayed 
+on command line:
+ERROR: Unsupported file format. 
+
+If the program is stuck in an infinite loop,type CTRL + C to break 
+out of it.
+
+EXAMPLE(S): 
+
+./dam -f ~/Desktop/A5/z01.wav -f ~/Desktop/A5/z02.wav
+./dam -d ~/Desktop/Dir1 -d ~/Desktop/Dir2
+./dam -f ~/Desktop/A5/z01.wav -d ~/Desktop/Dir1
+
+4. CHECK EXIT STATUS: 
+When the command line finishes execution, it returns an exit code. 
+The exit code is not displayed on the screen by default. 
+To examine the exit code, you need to write the following command :
+
+echo $?
+
+Exit status of :
+0 denotes Success.
+1 denotes Error. 
+
+5. OUTPUT:
+When two files match , following statement is shown on command line:
+MATCH <fileName1> <fileName2> time1 time2
+
+Where filename1 and filename2 are the names of the files that match,
+time1 and time2 are respective offsets of file1 and file2 at which both
+of them match.Nothing is printed in case of a mismatch. 
+ 
+6. ERROR Handling:
+Following checks are handled by the program and corresponding error 
+messages are printed on command line. 
+- ERROR: Not a directory -  If the given pathname does not exist and 
+is not a directory.
+- ERROR: Not a file -  If the given pathname is not a file (could
+ be a directory) and the pathname is incorrect. 
+- ERROR: unsupported file format - If the given file does not pass
+ all matching criteria for a supported format/or is of a type 
+unsupported by the program, this error will be printed on command line.
+
+Following check is done on the arguments passed to command line 
+through DAM:
+-ERROR: incorrect command line - In the steps described under 
+HOW TO EXECUTE, if any of the four arguments are skipped,
+ dam script will throw this error.
+
+EXAMPLE:
+./dam -f -f /home/USER/Desktop/A5/z01.wav     
+./dam /home/USER/Desktop/A5/z01.wav -f /home/USER/Desktop/A5/z02.wav
+
+will result in ERROR: Incorrect Command Line.
+
+
+7. EXECUTION TIME: 
+To run two files, the program approximately takes 12-15 seconds to run.
+To run two directories, the program will approximately 
+take 27 seconds - 20 minutes.
+
+8. REFERENCES: 
+Third party software used is LAME and WAV executable
+installed on CCIS linux machines under CS5500 folder to convert
+incoming files to a standard canonical format.
+
+Other references used:
+https://www.ee.columbia.edu/~ronw/code/MEAPsoft/
+doc/html/FFT_8java-source.html
+http://stackoverflow.com
+http://en.wikipedia.org/wiki/Fast_Fourier_transform
+http://en.wikipedia.org/wiki/Acoustic_fingerprint
+http://alvinalexander.com/java/java-exec-processbuilder-process-1
+http://en.wikipedia.org/wiki/Fingerprint
+http://en.wikipedia.org/wiki/Locality-sensitive_hashing
